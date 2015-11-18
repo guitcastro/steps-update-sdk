@@ -1,0 +1,71 @@
+title: "Android SDK Update"
+summary: |-
+  Need to install or update a packge from Android SDK Manager? Use this Step to
+  install and update them as you wish!   
+description: |-
+  Install the necessary sdk tools to compile your application  
+website: https://github.com/guitcastro/steps-update-sdk
+source_code_url: https://github.com/guitcastro/steps-update-sdk
+support_url: https://github.com/guitcastro/steps-update-sdk/issues
+host_os_tags:
+  - "osx-10.10"
+project_type_tags:
+  - android
+type_tags:
+  - "android"
+  - "build" 
+is_requires_admin_user: false
+is_always_run: false
+is_skippable: false
+dependencies: []
+run_if: ""
+inputs:
+  - tools: "on"
+    opts:
+      title: "Update Android SDK Build-tools"
+      summary: ""
+      description: |-
+        Mark this if you want to update the Android SDK Build-tools.
+      is_required: true
+      is_expand: false
+      value_options: ["on", "off"]
+      is_dont_change_value: false
+  - platform_tools: "stable"
+    opts:
+      title: "Android SDK Platform-tools version"
+      description: |-
+        Select which version if Android SDK Platform-tools should be installed.
+      is_required: true
+      is_expand: false
+      value_options : ["stable","preview","both","none"]
+      is_dont_change_value: false
+  - build_tools: "lasted"
+    opts:
+      title: "Android SDK Build-tools versions"
+      summary: "Example:23.0.2,22.0.1"
+      description: |-
+        List separated by comman all Build-tools versions that should be installed. 
+        leave empty with don't want to install.
+      is_required: true
+      is_expand: false
+      is_dont_change_value: false  
+  - platform: "23"
+    opts:
+      title: "Android SDK Platform versions"
+      summary: "Example: 23,22,17"
+      description: |-
+        List separated by comman all platform versions that should be installed. 
+        leave empty with don't want to install.
+      is_required: true
+      is_expand: false
+      is_dont_change_value: false              
+  - system_images: "none"
+    opts:
+      title: "SystemImages"
+      summary: "Example: sys-img-armeabi-v7a-android-tv-23, sys-img-armeabi-v7a-android-22"
+      description: |-
+        List separated by comman of all system images that should be installed.
+        Use `android list --all -e` to get see the name of all SystemImages
+      is_required: true
+      is_expand: false
+      is_dont_change_value: false
