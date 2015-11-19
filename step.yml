@@ -26,7 +26,7 @@ inputs:
       summary: ""
       description: |-
         Mark this if you want to update the Android SDK Build-tools.
-      is_required: true
+      is_required: false
       is_expand: false
       value_options: ["on", "off"]
       is_dont_change_value: false
@@ -59,13 +59,14 @@ inputs:
       is_required: true
       is_expand: false
       is_dont_change_value: false              
-  - system_images: "none"
+  - system_images: ""
     opts:
       title: "SystemImages"
       summary: "Example: sys-img-armeabi-v7a-android-tv-23, sys-img-armeabi-v7a-android-22"
       description: |-
         List separated by comman of all system images that should be installed.
         Use `android list --all -e` to get see the name of all SystemImages
-      is_required: true
+        leave empty with don't want to install.
+      is_required: false
       is_expand: false
       is_dont_change_value: false
