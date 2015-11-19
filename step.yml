@@ -34,7 +34,7 @@ inputs:
     opts:
       title: "Android SDK Platform-tools version"
       description: |-
-        Select which version if Android SDK Platform-tools should be installed.
+        Select which version of Android SDK Platform-tools should be installed.
       is_required: true
       is_expand: false
       value_options : ["stable","preview","both","none"]
