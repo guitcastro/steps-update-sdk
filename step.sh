@@ -2,9 +2,9 @@
 
 set -e
 
-# tools=off
-# platform_tools=none
-# platform=23,22,20
+tools=	
+platform_tools=both
+platform=23,22,20
 
 function appendFilter {
 	if [ -z "$FILTER" ]; then
@@ -56,4 +56,8 @@ done
 
 echo "updating sdk using filter = $FILTER"
 
-android update sdk --no-ui --all  --filter $FILTER
+# Prevent erros when accepting the license as suggest in:
+# http://stackoverflow.com/a/31900427/1107651
+( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
+    | android update sdk --no-ui --all \
+    --filter ${FILTER}
