@@ -39,7 +39,7 @@ inputs:
       is_expand: false
       value_options : ["stable","preview","both","none"]
       is_dont_change_value: false
-  - build_tools: "lasted"
+  - build_tools: "23.0.2"
     opts:
       title: "Android SDK Build-tools versions"
       summary: "Example:23.0.2,22.0.1"

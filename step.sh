@@ -4,7 +4,7 @@ set -e
 
 # tools=off
 # platform_tools=none
-# platform=lasted,23,22,20
+# platform=23,22,20
 
 function appendFilter {
 	if [ -z "$FILTER" ]; then
