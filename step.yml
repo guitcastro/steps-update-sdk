@@ -22,10 +22,10 @@ run_if: ""
 inputs:
   - tools: "on"
     opts:
-      title: "Update Android SDK Build-tools"
+      title: "Update Android SDK Tools"
       summary: ""
       description: |-
-        Mark this if you want to update the Android SDK Build-tools.
+        Enable this option to update the Android SDK Tools.
       is_required: false
       is_expand: false
       value_options: ["on", "off"]
