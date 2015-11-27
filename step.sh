@@ -1,5 +1,6 @@
 #!/bin/bash
 
+platform_tools=both
 #tools=
 #build_tools=23.0.1,22.1.1
 #platform=23,22,20,21
@@ -55,13 +56,13 @@ fi
 
 # Android SDK Platform-tools
 
-if [ "${platform_tools}" = 'stable' ]; then
+if [ "${platform_tools}" = "stable" ]; then
 	appendFilter 'platform-tools'
 fi
-if [ "${platform_tools}" = 'preview' ]; then
+if [ "${platform_tools}" = "preview" ]; then
 	appendFilter 'platform-tools-preview'
 fi
-if [ "${platform_tools}" = 'both' ]; then
+if [ "${platform_tools}" = "both" ]; then
 	appendFilter 'platform-tools'
 	appendFilter 'platform-tools-preview'
 fi
