@@ -49,7 +49,7 @@ inputs:
       is_required: true
       is_expand: false
       is_dont_change_value: false  
-  - platform: "23"
+  - sdk_version: "23"
     opts:
       title: "Android SDK Platform versions"
       summary: "Example: 23,22,17"

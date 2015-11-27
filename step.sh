@@ -68,7 +68,7 @@ fi
 
 # Android SDK Platform
 
-IFS=',' read -ra ADDR <<< "$platform"
+IFS=',' read -ra ADDR <<< "$sdk_version"
 for i in "${ADDR[@]}"; do
 	if checkIfIsInstalled "platforms" "android-$i" ; then
 	    echo "Android SDK Platform version $i is installed, skipping"
