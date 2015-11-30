@@ -1,15 +1,11 @@
 #!/bin/bash
 
 function checkIfIsInstalled {
-	local array="$(ls $ANDROID_HOME/$1)"
-	local i
-	for i in ${array[@]}
-	do				
-	    if [ "$i" == "$2" ] ; then
-	        return 0
-	    fi
-	done
-	return 1
+  if [ -d "$ANDROID_HOME/$1/$2" ] ; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 function appendFilter {

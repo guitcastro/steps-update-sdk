@@ -6,14 +6,14 @@ workflows:
     steps:
     - path::./:
         inputs:
-        - tools: "on"
+        - tools: ""
           opts: {}
-        - platform_tools: "both"
+        - platform_tools: ""
           opts: {}
         - platform: "23,22,20"
           opts: {}          
         - build_tools: "23.0.2,22.0.1"
           opts: {}
-        - system_images: "sys-img-x86_64-addon-google_apis-google-22,sys-img-x86-android-wear-20"
+        - system_images: "sys-img-x86-android-wear-20"
           opts: {}
           
