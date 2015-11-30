@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 function checkIfIsInstalled {
   if [ -d "$ANDROID_HOME/$1/$2" ] ; then
@@ -40,7 +41,7 @@ function checkIfIsSystemImageInstalled {
 
 # Android SDK Build-tools
 
-if [ "${tools}" = 'on' ]; then
+if [ "${tools}" = "on" ]; then
 	appendFilter 'tools'
 fi
 
