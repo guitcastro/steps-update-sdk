@@ -1,11 +1,5 @@
 #!/bin/bash
 
-platform_tools=both
-#tools=
-#build_tools=23.0.1,22.1.1
-#platform=23,22,20,21
-#system_images='sys-img-x86-android-23,sys-img-armeabi-v7a-android-tv-23,sys-img-armeabi-v7a-android-22,sys-img-x86-android-tv-23,sys-img-armeabi-v7a-android-wear-23,sys-img-x86-android-wear-23'
-
 function checkIfIsInstalled {
 	local array="$(ls $ANDROID_HOME/$1)"
 	local i
