@@ -14,7 +14,7 @@ function appendFilter {
 		FILTER=$1
 	else
 		FILTER="$FILTER,$1"
-	fi			
+	fi
 }
 
 function checkIfIsSystemImageInstalled {
@@ -22,11 +22,11 @@ function checkIfIsSystemImageInstalled {
 	regex='(sys-img)-([^\"]*)-(android-?([^\"]*)-)([0-9][0-9])'
 	if [[ $imageName =~ $regex ]] ; then
 		local arch=${BASH_REMATCH[2]}
-		local device_type='default'		
+		local device_type='default'
 		if [ -n "${BASH_REMATCH[4]}" ]; then
-			# TV or Wear  		  
+			# TV or Wear
 			local device_type="android-${BASH_REMATCH[4]}"
-		fi		
+		fi
 		local version=${BASH_REMATCH[5]}
 		#echo $imageName
 		local dir="$ANDROID_HOME/system-images/android-$version/$device_type/$arch"
@@ -35,7 +35,7 @@ function checkIfIsSystemImageInstalled {
 		fi
 	else
 		echo 'Regex failed'
-	fi	
+	fi
 	return 1
 }
 
@@ -66,18 +66,18 @@ for i in "${ADDR[@]}"; do
 	    echo "Android SDK Platform version $i is installed, skipping"
 	else
 		appendFilter "android-$i"
-	fi  	    
+	fi
 done
 
 # Android SDK Build-tools versions
 
 IFS=',' read -ra ADDR <<< "$build_tools"
-for i in "${ADDR[@]}"; do	
+for i in "${ADDR[@]}"; do
 	if checkIfIsInstalled "build-tools" "$i" ; then
 	    echo "Android SDK Build-tools version $i is installed, skipping"
 	else
 		appendFilter "build-tools-$i"
-	fi    
+	fi
 done
 
 # SystemImage
@@ -88,7 +88,7 @@ for i in "${ADDR[@]}"; do
 	    echo "$i is already installed, skipping"
 	else
 		appendFilter "$i"
-	fi  	
+	fi
 done
 
 echo "updating sdk using filter = $FILTER"
@@ -98,4 +98,3 @@ echo "updating sdk using filter = $FILTER"
 # http://stackoverflow.com/a/31900427/1107651
 ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
     | android update sdk --no-ui --all --filter ${FILTER}
-    
