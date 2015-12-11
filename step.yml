@@ -1,9 +1,9 @@
 title: "Android SDK Update"
 summary: |-
-  Need to install or update a packge from Android SDK Manager? Use this Step to
-  install and update them as you wish!   
+  Need to install or update a packge from Android SDK Manager?
+  Use this Step to install and update them as you wish!
 description: |-
-  Install the necessary sdk tools to compile your application  
+  Install the necessary sdk tools to compile your application
 website: https://github.com/guitcastro/steps-update-sdk
 source_code_url: https://github.com/guitcastro/steps-update-sdk
 support_url: https://github.com/guitcastro/steps-update-sdk/issues
@@ -13,60 +13,61 @@ project_type_tags:
   - android
 type_tags:
   - "android"
-  - "build" 
+  - "build"
 is_requires_admin_user: false
 is_always_run: false
 is_skippable: false
 dependencies: []
 run_if: ""
 inputs:
-  - tools: ""
+  - tools: "off"
     opts:
       title: "Update Android SDK Tools"
       summary: ""
       description: |-
         Enable this option to update the Android SDK Tools.
-      is_required: false
-      is_expand: false
-      value_options: ["on", "off"]
-      is_dont_change_value: false
-  - platform_tools: "stable"
+      value_options:
+      - "on"
+      - "off"
+  - platform_tools: "none"
     opts:
       title: "Android SDK Platform-tools version"
       description: |-
         Select which version of Android SDK Platform-tools should be installed.
       is_required: true
-      is_expand: false
-      value_options : ["stable","preview","both","none"]
-      is_dont_change_value: false
+      value_options:
+      - stable
+      - preview
+      - both
+      - none
   - build_tools: ""
     opts:
       title: "Android SDK Build-tools versions"
-      summary: "Example:23.0.2,22.0.1"
+      summary: "Example: 23.0.2,22.0.1"
       description: |-
-        List separated by comman all Build-tools versions that should be installed. 
-        leave empty with don't want to install.
-      is_required: true
-      is_expand: false
-      is_dont_change_value: false  
+        Comma separated list of all Build-tools versions that should be installed.
+        
+        Example: `23.0.2,22.0.1`
+
+        *Leave it empty if you don't want to install any Build tool.*
   - sdk_version: ""
     opts:
       title: "Android SDK Platform versions"
       summary: "Example: 23,22,17"
       description: |-
-        List separated by comman all platform versions that should be installed. 
-        leave empty with don't want to install.
-      is_required: true
-      is_expand: false
-      is_dont_change_value: false              
+        Comma separated list of all platform versions that should be installed.
+
+        Example: `23,22,17`
+
+        *Leave it empty if you don't want to install any SDK version.*
   - system_images: ""
     opts:
-      title: "SystemImages"
+      title: "System Images"
       summary: "Example: sys-img-armeabi-v7a-android-tv-23,sys-img-armeabi-v7a-android-22"
       description: |-
-        List separated by comman of all system images that should be installed.
-        Use `android list --all -e` to get see the name of all SystemImages
-        leave empty with don't want to install.
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
+        Comma separated list of all system images that should be installed.
+        Use `android list --all -e` to get the names of all available SystemImages.
+
+        Example: `sys-img-armeabi-v7a-android-tv-23,sys-img-armeabi-v7a-android-22`
+
+        *Leave it empty if you don't want to install any System Image.*
