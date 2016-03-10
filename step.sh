@@ -1,6 +1,75 @@
 #!/bin/bash
 set -e
 
+function vercomp () {
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+
+
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+
+    for ((i=0; i<${#ver1[@]}; i++))
+    do    	
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            return 1
+        fi        
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2
+        fi
+
+    done
+
+    
+
+    return 0
+}
+
+
+function getLastedSupportLibraryRevision {
+	packages=$(android list sdk)
+	line=$(grep "Local Maven repository for Support Libraries, revision" <<< "$packages")
+	echo ${line: -2}
+}
+
+function getLocalSupportLibraryRevision {
+	getPackageRevisionVersionFromFile "$ANDROID_HOME/extras/android/m2repository/source.properties"
+}
+
+function getPackageRevisionVersionFromFile {
+	local file=$1
+	local version=0
+
+	if [ -f "$file" ]
+	then
+	
+	while IFS='=' read -r key value
+	  do
+	  	if [ "$key" = "Pkg.Revision" ]; then	  		
+	  		version=$value
+	  	fi
+	done < "$file"
+	fi
+
+	echo $version
+
+}
+
 function checkIfIsInstalled {
   if [ -d "$ANDROID_HOME/$1/$2" ] ; then
     return 0
@@ -91,10 +160,37 @@ for i in "${ADDR[@]}"; do
 	fi
 done
 
-echo "updating sdk using filter = $FILTER"
+# Support library
 
+lastedVersion="$(getLastedSupportLibraryRevision)"
+localVersion="$(getLocalSupportLibraryRevision)"
 
-# Prevent erros when accepting the license as suggest in:
-# http://stackoverflow.com/a/31900427/1107651
-( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
-    | android update sdk --no-ui --all --filter ${FILTER}
+if [ $localVersion -eq 0 ] ; then 
+	echo "Local Support library repository not found"	
+	appendFilter "extra-android-m2repository"
+else
+	echo "Local Support library repository revision is ${localVersion}"
+	echo "Lasted Support library repository revision is ${lastedVersion}"
+
+	vercomp "$localVersion" "$lastedVersion"
+
+	if [ $? -gt 1 ] ; then
+		appendFilter "extra-android-m2repository"
+	else
+		echo "Support library repository is up to date"	
+	fi
+fi
+
+# Apply changes
+
+if [ -z "$FILTER" ]; then
+	echo "No packages to install"
+else
+
+	echo "updating sdk using filter = $FILTER"
+
+	# Prevent erros when accepting the license as suggest in:
+	# http://stackoverflow.com/a/31900427/1107651
+	( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
+	    | android update sdk --no-ui --all --filter ${FILTER}
+fi
