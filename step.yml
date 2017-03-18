@@ -63,7 +63,7 @@ inputs:
   - system_images: ""
     opts:
       title: "System Images"
-      summary: "Example: sys-img-armeabi-v7a-android-tv-23,sys-img-armeabi-v7a-android-22"
+      summary: "Example: system-images;android-20;android-wear;x86,system-images;android-20;android-tv;armeabi-v7a"
       description: |-
         Comma separated list of all system images that should be installed.
         Use `android list --all -e` to get the names of all available SystemImages.

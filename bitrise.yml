@@ -14,6 +14,6 @@ workflows:
           opts: {}          
         - build_tools: "23.0.2,22.0.1"
           opts: {}
-        - system_images: "sys-img-x86-android-wear-20"
+        - system_imagesL: "system-images;android-20;android-wear;x86"
           opts: {}
           

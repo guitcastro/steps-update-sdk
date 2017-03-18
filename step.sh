@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+ANDROID_HOME=/Users/guilherme/Library/Android/sdk
+
 function vercomp () {
     if [[ $1 == $2 ]]
     then
@@ -17,7 +19,7 @@ function vercomp () {
     done
 
     for ((i=0; i<${#ver1[@]}; i++))
-    do    	
+    do
         if [[ -z ${ver2[i]} ]]
         then
             # fill empty fields in ver2 with zeros
@@ -27,7 +29,7 @@ function vercomp () {
         if ((10#${ver1[i]} > 10#${ver2[i]}))
         then
             return 1
-        fi        
+        fi
         if ((10#${ver1[i]} < 10#${ver2[i]}))
         then
             return 2
@@ -35,16 +37,17 @@ function vercomp () {
 
     done
 
-    
+
 
     return 0
 }
 
 
 function getLastedSupportLibraryRevision {
-	packages=$(android list sdk)
-	line=$(grep "Local Maven repository for Support Libraries, revision" <<< "$packages")
-	echo ${line: -2}
+	packages=$(${ANDROID_HOME}/tools/bin/sdkmanager --list --verbose)
+	line=$(grep -A1 "Android Support Repository" <<< "$packages")
+	line=$(grep "Version:" <<< "$line")
+	echo ${line: -6}
 }
 
 function getLocalSupportLibraryRevision {
@@ -57,10 +60,10 @@ function getPackageRevisionVersionFromFile {
 
 	if [ -f "$file" ]
 	then
-	
+
 	while IFS='=' read -r key value
 	  do
-	  	if [ "$key" = "Pkg.Revision" ]; then	  		
+	  	if [ "$key" = "Pkg.Revision" ]; then
 	  		version=$value
 	  	fi
 	done < "$file"
@@ -80,9 +83,10 @@ function checkIfIsInstalled {
 
 function appendFilter {
 	if [ -z "$FILTER" ]; then
-		FILTER=$1
+		FILTER=\"$1\"
 	else
-		FILTER="$FILTER,$1"
+	    FILTER+=' '
+		FILTER+=\"$1\"
 	fi
 }
 
@@ -134,7 +138,7 @@ for i in "${ADDR[@]}"; do
 	if checkIfIsInstalled "platforms" "android-$i" ; then
 	    echo "Android SDK Platform version $i is installed, skipping"
 	else
-		appendFilter "android-$i"
+		appendFilter "android;$i"
 	fi
 done
 
@@ -145,7 +149,7 @@ for i in "${ADDR[@]}"; do
 	if checkIfIsInstalled "build-tools" "$i" ; then
 	    echo "Android SDK Build-tools version $i is installed, skipping"
 	else
-		appendFilter "build-tools-$i"
+		appendFilter "build-tools;$i"
 	fi
 done
 
@@ -165,9 +169,9 @@ done
 lastedVersion="$(getLastedSupportLibraryRevision)"
 localVersion="$(getLocalSupportLibraryRevision)"
 
-if [ $localVersion -eq 0 ] ; then 
-	echo "Local Support library repository not found"	
-	appendFilter "extra-android-m2repository"
+if [ $localVersion = 0 ] ; then
+	echo "Local Support library repository not found"
+	appendFilter "extras;android;m2repository"
 else
 	echo "Local Support library repository revision is ${localVersion}"
 	echo "Lasted Support library repository revision is ${lastedVersion}"
@@ -177,7 +181,7 @@ else
 	if [ $? -gt 1 ] ; then
 		appendFilter "extra-android-m2repository"
 	else
-		echo "Support library repository is up to date"	
+		echo "Support library repository is up to date"
 	fi
 fi
 
@@ -188,9 +192,11 @@ if [ -z "$FILTER" ]; then
 else
 
 	echo "updating sdk using filter = $FILTER"
+	
+	( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
+	    | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
 
 	# Prevent erros when accepting the license as suggest in:
 	# http://stackoverflow.com/a/31900427/1107651
-	( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
-	    | android update sdk --no-ui --all --filter ${FILTER}
+	eval "sdkmanager $FILTER"
 fi
