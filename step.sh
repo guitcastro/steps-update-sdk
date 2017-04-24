@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-ANDROID_HOME=/Users/guilherme/Library/Android/sdk
-
 function vercomp () {
     if [[ $1 == $2 ]]
     then
