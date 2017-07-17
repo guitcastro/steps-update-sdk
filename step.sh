@@ -136,7 +136,7 @@ for i in "${ADDR[@]}"; do
 	if checkIfIsInstalled "platforms" "android-$i" ; then
 	    echo "Android SDK Platform version $i is installed, skipping"
 	else
-		appendFilter "android;$i"
+		appendFilter "platforms;android-$i"
 	fi
 done
 
