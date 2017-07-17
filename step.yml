@@ -62,11 +62,11 @@ inputs:
 
         Example: `23,22,17`
 
-        *Leave it empty if you don't want to install any SDK version.*
+        *Leave it empty if you don't want to install any SDK version.*      
   - system_images: ""
     opts:
-      title: "System Images"
-      summary: "Example: system-images;android-20;android-wear;x86,system-images;android-20;android-tv;armeabi-v7a"
+      title: "System Images and others"
+      summary: "Example: extras;google;googlee_play_services,extras;google;m2repository,extras;android;m2repository,add-ons;addon-google_apis-google-15,system-images;android-20;android-wear;x86,system-images;android-20;android-tv;armeabi-v7a"
       description: |-
         Comma separated list of all system images that should be installed.
         Use `android list --all -e` to get the names of all available SystemImages.
