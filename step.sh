@@ -189,12 +189,11 @@ if [ -z "$FILTER" ]; then
 	echo "No packages to install"
 else
 
-	echo "updating sdk using filter = $FILTER"
-	
-	( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) \
+  # Prevent erros when accepting the license as suggest in:
+	# http://stackoverflow.com/a/31900427/1107651
+	( sleep 3 && while [ 1 ]; do sleep 1; echo y; done ) \
 	    | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
 
-	# Prevent erros when accepting the license as suggest in:
-	# http://stackoverflow.com/a/31900427/1107651
-	eval "sdkmanager $FILTER"
+  echo "updating sdk using filter = $FILTER"
+	eval "${ANDROID_HOME}/tools/bin/sdkmanager $FILTER"
 fi
